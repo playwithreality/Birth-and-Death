@@ -88,8 +88,6 @@ export class BirthScreen extends React.Component<any, BirthView> {
                     visible={this.state.modality}
                     onRequestClose={() => null}
                 >
-                    <Text>MODAL IS HERE</Text>
-                    <Text>LOVA MY MODALITY BIATCHES WATAFAQQAA</Text>
                     <CalendarPicker onDateChange={this.onDateChange} />
                     <View style={styles.touchContainer}>
                         <TouchableOpacity onPress={() => this.modalityHidden()}>
@@ -115,7 +113,7 @@ export class BirthScreen extends React.Component<any, BirthView> {
                     </TouchableOpacity>
                 </View>
 
-                <View>                        
+                <View style={styles.boxBackground1}>                        
                     <Text style={styles.subHeader}>Child</Text>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputFieldWrapper}>
@@ -129,21 +127,22 @@ export class BirthScreen extends React.Component<any, BirthView> {
                             />
                         </View>
                     </View>
-                </View>
-                <View style={styles.inputContainer}>
-                    <View style={styles.inputFieldWrapper}>
-                        <Text>Lastname</Text>
+                    <View style={styles.inputContainer}>
+                        <View style={styles.inputFieldWrapper}>
+                            <Text>Lastname</Text>
+                        </View>
+                        <View style={styles.inputFieldWrapper}>
+                            <TextInput 
+                                style={styles.textInputField} 
+                                onChangeText={this.changeLastname} 
+                                value={this.state.lastname}
+                            />
+                        </View>
                     </View>
-                    <View style={styles.inputFieldWrapper}>
-                        <TextInput 
-                            style={styles.textInputField} 
-                            onChangeText={this.changeLastname} 
-                            value={this.state.lastname}
-                        />
-                    </View>
                 </View>
+                
 
-                <View>
+                <View style={styles.boxBackground2}>
                     <Text style={styles.subHeader}>Mother</Text>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputFieldWrapper}>
@@ -171,7 +170,7 @@ export class BirthScreen extends React.Component<any, BirthView> {
                     </View>
                 </View>
 
-                <View>
+                <View style={styles.boxBackground1}>
                     <Text style={styles.subHeader}>Father</Text>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputFieldWrapper}>
@@ -199,7 +198,7 @@ export class BirthScreen extends React.Component<any, BirthView> {
                     </View>
                 </View>
 
-            <View>
+            <View style={styles.boxBackground2}>
                 <Text style={styles.subHeader}>Place of birth</Text>
                 <View style={styles.inputContainer}>
                     <View style={styles.inputFieldWrapper}>

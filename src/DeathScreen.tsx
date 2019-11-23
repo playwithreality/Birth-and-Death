@@ -109,7 +109,7 @@ export class DeathScreen extends React.Component<any, DeathView> {
                     </View>
                 </Modal>
 
-                <View>                        
+                <View style={styles.boxBackground1}>                        
                     <Text style={styles.subHeader}>Name of perished</Text>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputFieldWrapper}>
@@ -123,8 +123,7 @@ export class DeathScreen extends React.Component<any, DeathView> {
                             />
                         </View>
                     </View>
-                </View>
-                <View style={styles.inputContainer}>
+                    <View style={styles.inputContainer}>
                     <View style={styles.inputFieldWrapper}>
                         <Text>Lastname</Text>
                     </View>
@@ -136,8 +135,9 @@ export class DeathScreen extends React.Component<any, DeathView> {
                         />
                     </View>
                 </View>
+                </View>
 
-                <View>
+                <View style={styles.boxBackground2}>
                     <Text style={styles.subHeader}>Place of death</Text>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputFieldWrapper}>

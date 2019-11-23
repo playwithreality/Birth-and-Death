@@ -13,7 +13,7 @@ class HomeScreen extends React.Component<any> {
     return (
       <View style={styles.container}>
           <View>
-            <Text style={styles.textStyle}>Namibia BD Announcement</Text>
+            <Text style={styles.textStyle}>BIRTH AND DEATH ANNOUNCEMENT</Text>
           </View>
 
           <View>
