@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
+    alertText: {
+      color: 'red',
+      fontWeight: 'bold',
+      alignSelf: 'center',
+      fontSize: 20
+    },
     touchText: {
       color: 'white',
       fontSize: 20,

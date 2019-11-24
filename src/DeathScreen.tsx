@@ -4,6 +4,11 @@ import { Text, View, TouchableOpacity, Modal, TextInput } from 'react-native'
 import { Moment } from 'Moment'
 import CalendarPicker from 'react-native-calendar-picker'
 
+interface ErrorViews {
+    error: string
+    gotError: boolean
+}
+
 interface DeathInfo {
     firstname: string
     lastname: string
@@ -32,7 +37,7 @@ interface BorderHighlight {
     },
 }
 
-interface DeathView extends DeathInfo, BorderHighlight {
+interface DeathView extends DeathInfo, BorderHighlight, ErrorViews {
     birthModalityVisible: boolean
     deathModalityVisible: boolean
 }
@@ -65,7 +70,9 @@ export class DeathScreen extends React.Component<any, DeathView> {
             borderHighlight4: {
                 borderWidth: 0,
                 borderColor: '#1b8ab3'
-            }
+            },
+            error: '',
+            gotError: false
         }
     }
 
@@ -73,7 +80,7 @@ export class DeathScreen extends React.Component<any, DeathView> {
         this.setState({firstname: text})
     }
     private changeLastname = (text: string) => {
-        this.setState({firstname: text})
+        this.setState({lastname: text})
     }
 
     private changeVillage = (text: string) => {
@@ -178,6 +185,39 @@ export class DeathScreen extends React.Component<any, DeathView> {
         })
     }
 
+    private gotError(errorMessage: string) {
+        this.setState({error: errorMessage, gotError: true})
+    }
+
+    private cleanError() {
+        this.setState({error: '', gotError: false})
+    }
+
+    private onSend = () => {
+        if(this.state.firstname.length < 3) {
+            this.gotError('Firstname too short')
+            return false
+        } else if(this.state.lastname.length < 3) {
+            this.gotError('Lastname too short')
+            return false
+        }
+        else if (this.state.died === undefined) {
+            this.gotError('No death date selected')
+            return false
+        }  else if(this.state.born === undefined) {
+            this.gotError('No birthday selected')
+            return false
+        } else if(this.state.village.length < 3) {
+            this.gotError('Village name too short')
+            return false
+        } else if(this.state.region.length < 3) {
+            this.gotError('Region name too short')
+            return false
+        } else {
+            this.cleanError()
+            return true
+        }
+    }
 
     render() {
       const { navigate } = this.props.navigation
@@ -186,6 +226,14 @@ export class DeathScreen extends React.Component<any, DeathView> {
            <View>
               <Text style={styles.textStyle}>Announce Death</Text>
             </View>
+            {this.state.gotError ? 
+                    <View>
+                        <Text style={styles.alertText}>
+                            {this.state.error}
+                        </Text>
+                    </View> : 
+                    <></> 
+                }
             <Modal
                     transparent={false}
                     visible={this.state.deathModalityVisible}
@@ -307,7 +355,10 @@ export class DeathScreen extends React.Component<any, DeathView> {
 
                 <View style={styles.touchContainer}>
                     <TouchableOpacity  
-                        onPress={() => navigate('announceDeath')}
+                        onPress={() => {
+                            if(this.onSend()) {
+                                navigate('announceDeath')}}
+                            }
                     >
                         <View style={styles.buttonView}>
                             <Text style={styles.touchText}>Send announcement</Text>

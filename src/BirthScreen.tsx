@@ -51,7 +51,12 @@ interface BorderHighlight {
     },
 }
 
-interface BirthView extends PersonalDetails, BorderHighlight {
+interface ErrorViews {
+    error: string
+    gotError: boolean
+}
+
+interface BirthView extends PersonalDetails, BorderHighlight, ErrorViews {
     modality: boolean
 }
 
@@ -100,8 +105,9 @@ export class BirthScreen extends React.Component<any, BirthView> {
             borderHighlight8: {
                 borderWidth: 0,
                 borderColor: '#1b8ab3'
-            }
-            
+            },
+            error: '',
+            gotError: false
         }
     }
 
@@ -109,7 +115,7 @@ export class BirthScreen extends React.Component<any, BirthView> {
         this.setState({firstname: text})
     }
     private changeLastname = (text: string) => {
-        this.setState({firstname: text})
+        this.setState({lastname: text})
     }
     private changeMotherFirstname = (text: string) => {
         this.setState({motherFirstname: text})
@@ -286,6 +292,48 @@ export class BirthScreen extends React.Component<any, BirthView> {
             }
         })
     }
+
+    private onSend = () => {
+        if(this.state.date === undefined) {
+            this.gotError('No birthday selected')
+            return false
+        } else if(this.state.firstname.length < 3) {
+            this.gotError('Firstname too short')
+            return false
+        } else if(this.state.lastname.length < 3) {
+            this.gotError('Lastname too short')
+            return false
+        } else if(this.state.motherFirstname.length < 3) {
+            this.gotError('Mother firstname too short')
+            return false
+        } else if(this.state.motherLastname.length < 3) {
+            this.gotError('Mother lastname too short')
+            return false
+        } else if(this.state.fatherFirstname.length < 3) {
+            this.gotError('Father firstname too short')
+            return false
+        } else if(this.state.fatherLastname.length < 3) {
+            this.gotError('Father lastname too short')
+            return false
+        } else if(this.state.village.length < 3) {
+            this.gotError('Village name too short')
+            return false
+        } else if(this.state.region.length < 3) {
+            this.gotError('Region name too short')
+            return false
+        } else {
+            this.cleanError()
+            return true
+        }
+    }
+
+    private gotError(errorMessage: string) {
+        this.setState({error: errorMessage, gotError: true})
+    }
+
+    private cleanError() {
+        this.setState({error: '', gotError: false})
+    }
     
     render() {
 
@@ -312,6 +360,14 @@ export class BirthScreen extends React.Component<any, BirthView> {
                 <View>
                     <Text style={styles.textStyle}>New Birth</Text>
                 </View>
+                {this.state.gotError ? 
+                    <View>
+                        <Text style={styles.alertText}>
+                            {this.state.error}
+                        </Text>
+                    </View> : 
+                    <></> 
+                }
                 <View style={styles.touchContainer}>
                     <TouchableOpacity onPress={() => this.modalityVisible()}>
                         <View style={styles.buttonView}>
@@ -456,7 +512,12 @@ export class BirthScreen extends React.Component<any, BirthView> {
             </View>
 
                 <View style={styles.touchContainer}>
-                    <TouchableOpacity onPress={() => navigate('SendView')}>
+                    <TouchableOpacity onPress={() => {
+                            if(this.onSend()) {
+                                navigate('announceBirth')
+                            }
+                        }
+                        }>
                         <View style={styles.buttonView}>
                         <Text style={styles.touchText}>Announce Birth</Text>
                         </View>
