@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
     textStyle: {
       fontSize: 30,
       fontWeight: 'bold',
-      paddingBottom: 20,
+      paddingBottom: 20
     },
     touchContainer: {
       alignItems: 'center',
