@@ -13,7 +13,26 @@ interface DeathInfo {
     region: string
 }
 
-interface DeathView extends DeathInfo {
+interface BorderHighlight {
+    borderHighlight1: {
+        borderWidth: number
+        borderColor: string
+    },
+    borderHighlight2: {
+        borderWidth: number
+        borderColor: string
+    },
+    borderHighlight3: {
+        borderWidth: number
+        borderColor: string
+    },
+    borderHighlight4: {
+        borderWidth: number
+        borderColor: string
+    },
+}
+
+interface DeathView extends DeathInfo, BorderHighlight {
     birthModalityVisible: boolean
     deathModalityVisible: boolean
 }
@@ -31,6 +50,22 @@ export class DeathScreen extends React.Component<any, DeathView> {
             region: '',
             birthModalityVisible: false,
             deathModalityVisible: false,
+            borderHighlight1: {
+                borderWidth: 0,
+                borderColor: '#1b8ab3'
+            },
+            borderHighlight2: {
+                borderWidth: 0,
+                borderColor: '#1b8ab3'
+            },
+            borderHighlight3: {
+                borderWidth: 0,
+                borderColor: '#1b8ab3'
+            },
+            borderHighlight4: {
+                borderWidth: 0,
+                borderColor: '#1b8ab3'
+            }
         }
     }
 
@@ -70,7 +105,78 @@ export class DeathScreen extends React.Component<any, DeathView> {
 
     private onDeathModalityHidden = () => {
         this.setState({deathModalityVisible: false})
-}
+    }
+
+    private onFocus1 = () => {
+        this.setState({ 
+            borderHighlight1: {
+                borderWidth: 4,
+                borderColor: '#1b8ab3'
+            },
+        })
+    }
+
+    private onBlur1 = () => {
+        this.setState({
+            borderHighlight1: {
+                borderWidth: 0,
+                borderColor: '#1b8ab3'
+            }
+        })
+    }
+    private onFocus2 = () => {
+        this.setState({ 
+            borderHighlight2: {
+                borderWidth: 4,
+                borderColor: '#1b8ab3'
+            },
+        })
+    }
+
+    private onBlur2 = () => {
+        this.setState({
+            borderHighlight2: {
+                borderWidth: 0,
+                borderColor: '#1b8ab3'
+            }
+        })
+    }
+
+    private onFocus3 = () => {
+        this.setState({ 
+            borderHighlight3: {
+                borderWidth: 4,
+                borderColor: '#1b8ab3'
+            },
+        })
+    }
+
+    private onBlur3 = () => {
+        this.setState({
+            borderHighlight3: {
+                borderWidth: 0,
+                borderColor: '#1b8ab3'
+            }
+        })
+    }
+
+    private onFocus4 = () => {
+        this.setState({ 
+            borderHighlight4: {
+                borderWidth: 4,
+                borderColor: '#1b8ab3'
+            },
+        })
+    }
+
+    private onBlur4 = () => {
+        this.setState({
+            borderHighlight4: {
+                borderWidth: 0,
+                borderColor: '#1b8ab3'
+            }
+        })
+    }
 
 
     render() {
@@ -115,9 +221,11 @@ export class DeathScreen extends React.Component<any, DeathView> {
                         <View style={styles.inputFieldWrapper}>
                             <Text>Firtname</Text>
                         </View>
-                        <View style={styles.inputFieldWrapper}>
+                        <View style={[styles.inputFieldWrapper, this.state.borderHighlight1]}>
                             <TextInput 
-                                style={styles.textInputField} 
+                                style={styles.textInputField}
+                                onFocus={this.onFocus1} 
+                                onBlur={this.onBlur1}
                                 onChangeText={this.changeFirstname} 
                                 value={this.state.firstname}
                             />
@@ -127,9 +235,11 @@ export class DeathScreen extends React.Component<any, DeathView> {
                     <View style={styles.inputFieldWrapper}>
                         <Text>Lastname</Text>
                     </View>
-                    <View style={styles.inputFieldWrapper}>
+                    <View style={[styles.inputFieldWrapper, this.state.borderHighlight2]}>
                         <TextInput 
-                            style={styles.textInputField} 
+                            style={styles.textInputField}
+                            onFocus={this.onFocus2} 
+                            onBlur={this.onBlur2} 
                             onChangeText={this.changeLastname} 
                             value={this.state.lastname}
                         />
@@ -138,14 +248,42 @@ export class DeathScreen extends React.Component<any, DeathView> {
                 </View>
 
                 <View style={styles.boxBackground2}>
+                    <Text style={styles.subHeader}>Day of Death and Birth</Text>
+                    <View style={styles.touchContainer}>
+                        <TouchableOpacity onPress={() => {
+                            this.onDeathModalityVisible()
+                            }}
+                        >
+                            <View style={styles.buttonView}>
+                            <Text style={styles.touchText}>{this.state.died ? `Died on ${this.state.died.format('DD-MM-YYYY')}` : 'Day of death'}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.touchContainer}>
+                        <TouchableOpacity  
+                            onPress={() => {
+                                this.onBirthModalityVisible()
+                            }}
+                        >
+                            <View style={styles.buttonView}>
+                                <Text style={styles.touchText}>{this.state.born? `Born on ${this.state.born.format('DD-MM-YYYY')}` : "Day of birth"}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <View style={styles.boxBackground1}>
                     <Text style={styles.subHeader}>Place of death</Text>
                     <View style={styles.inputContainer}>
                         <View style={styles.inputFieldWrapper}>
                             <Text>Village</Text>
                         </View>
-                        <View style={styles.inputFieldWrapper}>
+                        <View style={[styles.inputFieldWrapper, this.state.borderHighlight3]}>
                             <TextInput 
-                                style={styles.textInputField} 
+                                style={styles.textInputField}
+                                onFocus={this.onFocus3} 
+                                onBlur={this.onBlur3} 
                                 onChangeText={this.changeVillage} 
                                 value={this.state.village}
                             />
@@ -155,9 +293,11 @@ export class DeathScreen extends React.Component<any, DeathView> {
                         <View style={styles.inputFieldWrapper}>
                             <Text>Region</Text>
                         </View>
-                        <View style={styles.inputFieldWrapper}>
+                        <View style={[styles.inputFieldWrapper, this.state.borderHighlight4]}>
                             <TextInput 
-                                style={styles.textInputField} 
+                                style={styles.textInputField}
+                                onFocus={this.onFocus4} 
+                                onBlur={this.onBlur4} 
                                 onChangeText={this.changeRegion} 
                                 value={this.state.region}
                             />
@@ -166,24 +306,11 @@ export class DeathScreen extends React.Component<any, DeathView> {
                 </View>
 
                 <View style={styles.touchContainer}>
-                    <TouchableOpacity onPress={() => {
-                        this.onDeathModalityVisible()
-                        }}
-                    >
-                        <View style={styles.buttonView}>
-                        <Text style={styles.touchText}>{this.state.died ? `Died on ${this.state.died.format('DD-MM-YYYY')}` : 'Day of death'}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.touchContainer}>
                     <TouchableOpacity  
-                        onPress={() => {
-                            this.onBirthModalityVisible()
-                        }}
+                        onPress={() => navigate('announceDeath')}
                     >
                         <View style={styles.buttonView}>
-                            <Text style={styles.touchText}>{this.state.born? `Born on ${this.state.born.format('DD-MM-YYYY')}` : "Day of birth"}</Text>
+                            <Text style={styles.touchText}>Send announcement</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

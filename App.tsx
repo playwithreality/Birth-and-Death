@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { BirthScreen } from './src/BirthScreen'
 import { DeathScreen } from './src/DeathScreen'
 import { styles } from './src/styles'
+import { AnnounceBirth, AnnounceDeath } from './src/Announcement'
 
 class HomeScreen extends React.Component<any> {
 
@@ -39,10 +40,6 @@ class HomeScreen extends React.Component<any> {
   }
 }
 
-
-
-
-
 const AppNavigator = createStackNavigator({
   Home: {
     screen: HomeScreen
@@ -52,6 +49,12 @@ const AppNavigator = createStackNavigator({
   },
   Death: {
     screen: DeathScreen
+  },
+  announceBirth: {
+    screen: AnnounceBirth
+  },
+  announceDeath: {
+    screen: AnnounceDeath
   }
 })
 
