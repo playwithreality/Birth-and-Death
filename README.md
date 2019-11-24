@@ -17,6 +17,7 @@ Some libraries used wih the project
 * React Native Calendar Picker
 
 ## Future Development Options
-Abstract coding components to make the project cleaner
-Use more UI design principles to improve the UI
-Generally spend more time with styling choices to build a more appealing looking UI
+* Abstract coding components to make the project cleaner
+* Use more UI design principles to improve the UI
+* Generally spend more time with styling choices to build a more appealing looking UI
+* Build a backend server with database for storing and processing the birth and death information
